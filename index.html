@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="te">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mana Connect</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101027;color:white;font-family:Arial,sans-serif}
+header{background:#191936;padding:18px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #393966}
+.logo{font-size:24px;font-weight:bold;background:linear-gradient(90deg,#438aff,#c15bff);background-clip:text;color:transparent}
+button{border:0;border-radius:12px;padding:11px 16px;background:linear-gradient(90deg,#347cff,#923fff);color:white;font-weight:bold;cursor:pointer}
+.container{max-width:600px;margin:auto;padding:15px}
+h2{margin:12px 0}
+.story{display:flex;gap:14px;overflow:auto;padding:15px 0}
+.story div{text-align:center;min-width:65px;font-size:12px}
+.circle{width:55px;height:55px;border-radius:50%;background:linear-gradient(45deg,#368bff,#bb43ff);display:grid;place-items:center;font-size:23px;margin:auto auto 6px}
+.card{background:#1c1c3c;border:1px solid #34345e;border-radius:16px;padding:15px;margin:15px 0}
+textarea{width:100%;background:#11112b;color:white;border:1px solid #555580;border-radius:12px;padding:13px;resize:vertical}
+.posthead{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.avatar{width:40px;height:40px;border-radius:50%;background:#704cff;display:grid;place-items:center}
+.post{line-height:1.6}
+.actions{display:flex;gap:12px;margin-top:12px}
+.actions button{background:#30305a}
+nav{position:sticky;bottom:0;background:#191936;display:flex;justify-content:space-around;padding:15px 3px}
+nav button{background:transparent;padding:8px;font-size:13px}
+footer{text-align:center;color:#999;padding:20px}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">💜 Mana Connect</div>
+<button onclick="changeLang()" id="lang">తెలుగు</button>
+</header>
+<main class="container">
+<h2 id="welcome">మన కనెక్ట్‌కు స్వాగతం ❤️</h2>
+<p id="subtitle">మీ స్నేహితులతో కనెక్ట్ అవ్వండి</p>
+
+<div class="story">
+<div><div class="circle">➕</div><span id="yourstory">Your Story</span></div>
+<div><div class="circle">😊</div>Friend 1</div>
+<div><div class="circle">🌸</div>Friend 2</div>
+<div><div class="circle">😎</div>Friend 3</div>
+<div><div class="circle">❤️</div>Friend 4</div>
+</div>
+
+<div class="card">
+<h3 id="create">ఏమి షేర్ చేయాలనుకుంటున్నారు?</h3>
+<textarea id="message" rows="3" placeholder="మీ ఆలోచనలను రాయండి..."></textarea>
+<br><br>
+<button onclick="addPost()" id="share">Share Post</button>
+</div>
+
+<h2 id="feed">Latest Posts</h2>
+<div id="posts">
+<div class="card">
+<div class="posthead"><div class="avatar">😊</div><b>Mana Connect</b></div>
+<div class="post">మనసులను కలిపే మన సొంత వేదిక! ❤️</div>
+<div class="actions"><button onclick="like(this)">❤️ 0</button><button onclick="alert('Comments coming soon!')">💬 Comment</button></div>
+</div>
+</div>
+</main>
+
+<nav>
+<button onclick="topFunction()">🏠 Home</button>
+<button onclick="document.getElementById('message').focus()">➕ Post</button>
+<button onclick="alert('Friends feature coming soon!')">👥 Friends</button>
+<button onclick="alert('Profile feature coming soon!')">👤 Profile</button>
+</nav>
+<footer>© 2026 Mana Connect</footer>
+
+<script>
+let telugu=true;
+function changeLang(){
+telugu=!telugu;
+document.getElementById('lang').innerText=telugu?'తెలుగు':'English';
+document.getElementById('welcome').innerText=telugu?'మన కనెక్ట్‌కు స్వాగతం ❤️':'Welcome to Mana Connect ❤️';
+document.getElementById('subtitle').innerText=telugu?'మీ స్నేహితులతో కనెక్ట్ అవ్వండి':'Connect with your friends';
+document.getElementById('create').innerText=telugu?'ఏమి షేర్ చేయాలనుకుంటున్నారు?':'What would you like to share?';
+document.getElementById('share').innerText=telugu?'షేర్ చేయండి':'Share Post';
+document.getElementById('feed').innerText=telugu?'తాజా పోస్టులు':'Latest Posts';
+}
+function addPost(){
+let msg=document.getElementById('message');
+if(!msg.value.trim()){alert('Please write something!');return;}
+let card=document.createElement('div');
+card.className='card';
+let head=document.createElement('div');
+head.className='posthead';
+head.innerHTML='<div class="avatar">😊</div><b>My Post</b>';
+let content=document.createElement('div');
+content.className='post';
+content.textContent=msg.value;
+let actions=document.createElement('div');
+actions.className='actions';
+let btn=document.createElement('button');
+btn.textContent='❤️ 0';
+btn.onclick=function(){like(btn)};
+actions.appendChild(btn);
+card.append(head,content,actions);
+document.getElementById('posts').prepend(card);
+msg.value='';
+}
+function like(btn){
+let n=parseInt(btn.textContent.match(/\d+/)[0]);
+btn.textContent='❤️ '+(n+1);
+}
+function topFunction(){window.scrollTo({top:0,behavior:'smooth'})}
+</script>
+</body>
+</html>
